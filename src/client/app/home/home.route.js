@@ -1,16 +1,16 @@
 'use strict';
 
 (function () {
-    angular.module('app.feature1')
+    angular.module('app.home')
         .config(getRoutes);
 
     getRoutes.$inject = ['$routeProvider', '$locationProvider'];
 
     function getRoutes($routeProvider, $locationProvider) {
         $routeProvider
-            .when('/', {
-                templateUrl: 'app/feature1/feature1.html',
-                controller: 'Feature1',
+            .when('/:id?', {
+                templateUrl: 'app/home/home.html',
+                controller: 'Home',
                 controllerAs: 'vm'
             })
             .otherwise({ redirectTo: '/' });

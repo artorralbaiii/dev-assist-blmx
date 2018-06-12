@@ -6,6 +6,6 @@
             /* Shared Modules */
             'app.core',
             /* Feature Modules */
-            'app.feature1'
+            'app.home'
         ]);
 })();

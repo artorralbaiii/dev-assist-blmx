@@ -1,5 +1,5 @@
 {
-  "name": "mean_app_template",
+  "name": "dev-assist",
   "description": "",
   "main": "index.js",
   "authors": [
@@ -31,7 +31,6 @@
     }
   },
   "dependencies": {
-    "bootstrap": "^3.3.7",
     "angular": "^1.6.4",
     "angular-route": "^1.6.4"
   }
