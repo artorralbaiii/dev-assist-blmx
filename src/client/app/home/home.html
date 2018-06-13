@@ -28,7 +28,7 @@
                                     <label for="cust-name">Name</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <button data-ng-click="vm.customer.rndCustName = !vm.customer.rndCustName;" class="btn btn-primary btn-sm" type="button">Random: {{vm.customer.rndCustName ? 'YES' : 'NO'}}</button>
+                                            <button data-ng-click="vm.customer.rndCustName = !vm.customer.rndCustName;" data-ng-class="{'btn-primary': vm.customer.rndCustName}" class="btn btn-sm" type="button">Random: {{vm.customer.rndCustName ? 'YES' : 'NO'}}</button>
                                         </div>
                                         <input data-ng-model="vm.customer.custName" data-ng-readonly="vm.customer.custName" type="text" class="form-control form-control-sm"
                                             id="cust-name" placeholder="Customer Name">
@@ -38,7 +38,7 @@
                                     <label for="cust-balance">Balance</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <button data-ng-click="vm.customer.rndBalance = !vm.customer.rndBalance;" class="btn btn-primary btn-sm" type="button">Random: {{vm.customer.balance ? 'YES' : 'NO'}}</button>
+                                            <button data-ng-click="vm.customer.rndBalance = !vm.customer.rndBalance;" data-ng-class="{'btn-primary': vm.customer.rndBalance}" class="btn btn-sm" type="button">Random: {{vm.customer.rndBalance ? 'YES' : 'NO'}}</button>
                                         </div>
                                         <input data-ng-model="vm.customer.balance" type="number" class="form-control form-control-sm" id="cust-balance" placeholder="Balance">
                                     </div>
@@ -54,7 +54,7 @@
                                     <label for="cust-status">Status</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <button data-ng-class="{'btn-primary': vm.customer.rndStatus}" class="btn btn-sm" type="button">Random: {{vm.customer.rndCustName ? 'YES' : 'NO'}}</button>
+                                            <button data-ng-click="vm.customer.rndStatus = !vm.customer.rndStatus;" data-ng-class="{'btn-primary': vm.customer.rndStatus}" class="btn btn-sm" type="button">Random: {{vm.customer.rndStatus? 'YES' : 'NO'}}</button>
                                         </div>
                                         <select data-ng-model="vm.customer.status" class="form-control form-control-sm" id="cust-status">
                                             <option>Active</option>
@@ -66,7 +66,7 @@
                                     <label for="cust-product">Product</label>
                                     <div class="input-group mb-3">
                                         <div class="input-group-prepend">
-                                            <button class="btn btn-primary btn-sm" type="button">Random: YES</button>
+                                            <button data-ng-click="vm.customer.rndProduct = !vm.customer.rndProduct;"  data-ng-class="{'btn-primary': vm.customer.rndProduct}" class="btn btn-sm" type="button">Random: YES</button>
                                         </div>
                                         <select data-ng-model="vm.customer.product" class="form-control form-control-sm" id="cust-product">
                                             <option>Savings</option>
