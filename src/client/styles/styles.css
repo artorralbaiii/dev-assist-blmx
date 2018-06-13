@@ -5,3 +5,7 @@
 .home-col {
     padding: 20px;
 }
+
+.btn-sm {
+    font-size: .7rem;
+}

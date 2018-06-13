@@ -1,12 +1,12 @@
 'use strict';
 
-let helloCtrl = require('./controllers/hello.controller')();
+var accountCtrl = require('./controllers/account.controller')();
 
 module.exports = (express) => {
 
-    let api = express.Router();
+    var api = express.Router();
 
-    api.get('/hello', helloCtrl.hello);
+    api.get('/account', accountCtrl.createAccount);
 
     return api;
 };

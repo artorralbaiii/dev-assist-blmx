@@ -1,33 +1,31 @@
 'use strict';
 
 //  Vendor Packages 
-let express = require('express');
-let bodyParser = require('body-parser');
-let logger = require('morgan');
-let compress = require('compression');
-let mongoose = require('mongoose');
+var express = require('express');
+var bodyParser = require('body-parser');
+var compress = require('compression');
+var mongoose = require('mongoose');
+var cfenv = require('cfenv');
 
 // Application Packages
-let errHandler = require('./shared/errorHandler')();
+var errHandler = require('./shared/errorHandler')();
 
 // Environment Variables
-let port = process.env.PORT || 3000;
-let environ = process.env.NODE_ENV || 'dev';
-let dbUser = process.env.DB_USER || '';
-let dbPassword = process.env.DB_PWD || '';
-let dbHost = process.env.DB_HOST || '';
-let dbName = process.env.DB_NAME || '';
-let connString = 'mongodb://' + dbUser + ':' + dbPassword + '@' + dbHost + '/' + dbName;
+var appenv = cfenv.getAppEnv();
+var config = require('./app.config')();
+var envVar = appenv.isLocal ? config.env : process.env;
+var port = envVar.PORT || 8001;
+var environ = envVar.NODE_ENV || 'dev';
 
 // Database Connection
-mongoose
-    .connect(connString, (err) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log('Connected to database...');
-        }
-    });
+
+mongoose.connect(envVar.MONGO_DB, { useMongoClient: true }, function (err) {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log('Connected to database...');
+    }
+});
 
 // Web Server Variables
 let app = express();
@@ -37,7 +35,6 @@ let app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(compress());
-app.use(logger('dev'));
 app.use(errHandler.handle);
 
 // API Router

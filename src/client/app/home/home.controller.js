@@ -12,9 +12,20 @@
         vm.DEFAULT_SCR = 0;
         vm.FORM_SCR = 1;
 
+        vm.customer = {};
+        vm.customer.rndCustName = true;
+        vm.customer.rndBalance = true;
+        vm.customer.rndProduct = true;
+        vm.customer.rndStatus = true;
+        vm.customer.rndType = true;
+        vm.customer.rndTransDate = true;
+        vm.customer.rndAmt = true;
+
         if ($routeParams['id']) {
             vm.state = parseInt($routeParams['id']);
         }
+
+
 
 
     }
