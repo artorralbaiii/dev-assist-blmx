@@ -1,6 +1,6 @@
-'use strict';
-
 var Customer = require('../models/customer');
+var Template = require('../models/template');
+var random = require('random-name');
 
 module.exports = () => {
     var ctrl = {
@@ -11,26 +11,81 @@ module.exports = () => {
 
     // Implementations
 
+    /*jshint -W074 */
     function createAccount(req, res, next) {
         var body = req.body;
-
         var customers = [];
+        var newCustomer = null;
+        var name = '';
+        var status = '';
+        var product = '';
+        var balance = 0;
+        var transType = '';
+        var amount = 0;
+        var transDate = new Date();
 
+        for (var i = 0; i < body.custCount; i++) {
 
-        for (i = 0; i < body.custCount; i++) {
-            var newCustomer = new Customer( {
-                name: dName,
-                status: dStatus,
-                product: dProduct,
-                balance: dBalance,
+            if (body.rndCustName) {
+                name = randomData('NAME');
+            } else {
+                if (i === 0) {
+                    name = body.custName;
+                } else {
+                    name = body.custName + '_' + i;
+                }
+            }
+
+            if (body.rndStatus) {
+                status = randomData('STATUS');
+            } else {
+                status = body.status;
+            }
+
+            if (body.rndProduct) {
+                product = randomData('PRODUCT');
+            } else {
+                product = body.product;
+            }
+
+            if (body.rndBalance) {
+                balance = randomData('BALANCE');
+            } else {
+                balance = body.balance;
+            }
+
+            newCustomer = new Customer({
+                name: name,
+                status: status,
+                product: product,
+                balance: balance,
                 transactions: []
             });
 
-            for (i = 0; i < body.transCount; i++) {
+            for (var j = 0; j < body.transCount; j++) {
+
+                if (body.rndAmt) {
+                    amount = randomData('AMOUNT');
+                } else {
+                    amount = body.amt;
+                }
+
+                if (body.rndTransType) {
+                    transType = randomData('TYPE');
+                } else {
+                    transType = body.type;
+                }
+
+                if (body.rndAmt) {
+                    transDate = randomData('DATE');
+                } else {
+                    transDate = body.transDate;
+                }
+
                 var trans = {
                     transType: transType,
                     amount: amount,
-                    transData: transDate
+                    transDate: transDate
                 };
                 newCustomer.transactions.push(trans);
             }
@@ -38,18 +93,66 @@ module.exports = () => {
             customers.push(newCustomer);
         }
 
-        newCustomer.save(function (err, records) {
+        Customer.collection.insert(customers, function (err, docs) {
             if (err) {
                 return next(err);
+            } else {
+                Template.findById(body.templateId, function (err, doc) {
+                    if (err) {
+                        return next(err);
+                    }
+
+                    var template = new Template({
+                        templateName: body.templateName,
+                        data: JSON.stringify(body)
+                    });
+
+                    template.save(function (err, doc) {
+                        if (err) {
+                            return next(err);
+                        }
+                        res.json(docs.ops);
+                    });
+                });
             }
-
-            res.json({
-                success: true,
-                message: 'Records successfully created.',
-                data: records
-            });
-
         });
+
     }
 
 };
+
+/*jshint +W074 */
+
+function randomData(fldType) {
+    var index = 0;
+    var values = [];
+
+    if (fldType === 'NAME') {
+        return random.first() + ' ' + random.last();
+    } else if (fldType === 'STATUS') {
+        values = ['Active', 'Inactive'];
+        index = Math.floor((Math.random() * 2) + 1) - 1;
+
+        return values[index];
+    } else if (fldType === 'PRODUCT') {
+        values = ['Savings', 'Checking'];
+        index = Math.floor((Math.random() * 2) + 1) - 1;
+
+        return values[index];
+    } else if (fldType === 'BALANCE') {
+        return Math.floor((Math.random() * 100000) + 1);
+    } else if (fldType === 'TYPE') {
+        values = ['Debit', 'Credit'];
+        index = Math.floor((Math.random() * 2) + 1) - 1;
+
+        return values[index];
+    } else if (fldType === 'AMOUNT') {
+        return Math.floor((Math.random() * 10000) + 1);
+    } else if (fldType === 'DATE') {
+        var start = new Date(2018, 01, 01);
+        var end = new Date(2018, 12, 31);
+
+        return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+    }
+
+}

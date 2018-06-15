@@ -6,7 +6,7 @@ module.exports = (express) => {
 
     var api = express.Router();
 
-    api.get('/account', accountCtrl.createAccount);
+    api.post('/account', accountCtrl.createAccount);
 
     return api;
 };

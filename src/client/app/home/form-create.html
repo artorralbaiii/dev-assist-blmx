@@ -1,0 +1,132 @@
+<div class="card">
+    <div class="card-header">Create Test Account(s)</div>
+    <div class="card-body">
+        <p class="card-text">Fill up the form below for the field values you would like to appear in your test accounts.</p>
+
+        <form data-ng-submit="vm.submit(vm.customer);">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="cust-name">Template Name</label>
+                            <input data-ng-model="vm.customer.templateName" type="text" class="form-control form-control-sm" id="cust-name" placeholder="Template Name">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <legend>Customer Info :</legend>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="cust-name">Name</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button data-ng-click="vm.customer.rndCustName = !vm.customer.rndCustName;" data-ng-class="{'btn-primary': vm.customer.rndCustName}"
+                                        class="btn btn-sm" type="button">Random: {{vm.customer.rndCustName ? 'YES' : 'NO'}}</button>
+                                </div>
+                                <input data-ng-model="vm.customer.custName" data-ng-disabled="vm.customer.rndCustName" type="text" class="form-control form-control-sm"
+                                    id="cust-name" placeholder="Customer Name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cust-balance">Balance</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button data-ng-click="vm.customer.rndBalance = !vm.customer.rndBalance;" data-ng-class="{'btn-primary': vm.customer.rndBalance}"
+                                        class="btn btn-sm" type="button">Random: {{vm.customer.rndBalance ? 'YES' : 'NO'}}</button>
+                                </div>
+                                <input data-ng-model="vm.customer.balance" data-ng-disabled="vm.customer.rndBalance" type="number" class="form-control form-control-sm"
+                                    id="cust-balance" placeholder="Balance">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cust-count">How many customer records?</label>
+                            <input data-ng-model="vm.customer.custCount" type="number" class="form-control form-control-sm" id="cust-count" placeholder="How many?">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="cust-status">Status</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button data-ng-click="vm.customer.rndStatus = !vm.customer.rndStatus;" data-ng-class="{'btn-primary': vm.customer.rndStatus}"
+                                        class="btn btn-sm" type="button">Random: {{vm.customer.rndStatus? 'YES' : 'NO'}}</button>
+                                </div>
+                                <select data-ng-model="vm.customer.status" data-ng-disabled="vm.customer.rndStatus" class="form-control form-control-sm"
+                                    id="cust-status">
+                                    <option>Active</option>
+                                    <option>Inactive</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cust-product">Product</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button data-ng-click="vm.customer.rndProduct = !vm.customer.rndProduct;" data-ng-class="{'btn-primary': vm.customer.rndProduct}"
+                                        class="btn btn-sm" type="button">Random: {{vm.customer.rndProduct? 'YES' : 'NO'}}</button>
+                                </div>
+                                <select data-ng-model="vm.customer.product" data-ng-disabled="vm.customer.rndProduct" class="form-control form-control-sm"
+                                    id="cust-product">
+                                    <option>Savings</option>
+                                    <option>Checking</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <legend>Transactions :</legend>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="trans-type">Transaction Type</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button data-ng-click="vm.customer.rndTransType = !vm.customer.rndTransType;" data-ng-class="{'btn-primary': vm.customer.rndTransType}"
+                                        class="btn btn-sm" type="button">Random: {{vm.customer.rndTransType? 'YES' : 'NO'}}</button>
+                                </div>
+                                <select data-ng-model="vm.customer.type" data-ng-disabled="vm.customer.rndTransType" class="form-control form-control-sm"
+                                    id="trans-type">
+                                    <option>Debit</option>
+                                    <option>Credit</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="trans-date">Transaction Date</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button data-ng-click="vm.customer.rndTransDate = !vm.customer.rndTransDate;" data-ng-class="{'btn-primary': vm.customer.rndTransDate}"
+                                        class="btn btn-sm" type="button">Random: {{vm.customer.rndTransDate? 'YES' : 'NO'}}</button>
+                                </div>
+                                <input data-ng-model="vm.customer.transDate" data-ng-disabled="vm.customer.rndTransDate" type="date" class="form-control form-control-sm"
+                                    id="trans-date" placeholder="Transaction Date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="trans-amt">Amount</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button data-ng-click="vm.customer.rndAmt = !vm.customer.rndAmt;" data-ng-class="{'btn-primary': vm.customer.rndAmt}" class="btn btn-sm"
+                                        type="button">Random: {{vm.customer.rndAmt? 'YES' : 'NO'}}</button>
+                                </div>
+                                <input data-ng-model="vm.customer.amt" data-ng-disabled="vm.customer.rndAmt" type="number" class="form-control form-control-sm"
+                                    id="trans-amt" placeholder="Amount">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="trans-count">How many transaction records?</label>
+                            <input data-ng-model="vm.customer.transCount" type="number" class="form-control form-control-sm" id="trans-count" placeholder="How many?">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="Submit" class="btn btn-success float-right">Submit</button>
+        </form>
+
+    </div>
+</div>

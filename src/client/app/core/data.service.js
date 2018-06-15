@@ -8,15 +8,15 @@
 
     function dataservice($http, $log) {
         var service = {
-            hello: hello
+            createData: createData
         };
 
         return service;
 
         /* Implementations */
 
-        function hello() {
-            return $http.get('/api/hello')
+        function createData(data) {
+            return $http.post('/api/account', data)
                 .then(function (data, status, headers, config) {
                     return data.data;
                 })

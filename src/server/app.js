@@ -19,7 +19,6 @@ var environ = envVar.NODE_ENV || 'dev';
 
 // Database Connection
 
-/*
 mongoose.connect(envVar.MONGO_DB, { useMongoClient: true }, function (err) {
     if (err) {
         console.log(err);
@@ -27,7 +26,6 @@ mongoose.connect(envVar.MONGO_DB, { useMongoClient: true }, function (err) {
         console.log('Connected to database...');
     }
 });
-*/
 
 // Web Server Variables
 let app = express();
