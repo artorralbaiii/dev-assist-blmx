@@ -1,3 +1,5 @@
+<a data-ng-click="vm.state=1;" href="/#!/1">Back To Form</a>
+<br>
 <h3>{{vm.customers.length}} record(s) has been created:</h3>
 
 <div class="table-responsive">
@@ -13,7 +15,9 @@
         </thead>
         <tbody>
             <tr class="customer-row" data-ng-repeat-start="c in vm.customers" data-ng-click="c.collapse=!c.collapse">
-                <td><strong>{{c.collapse ? '-' : '+'}}</strong></td>
+                <td>
+                    <strong>{{c.collapse ? '-' : '+'}}</strong>
+                </td>
                 <td>{{c.name}}</td>
                 <td>{{c.product}}</td>
                 <td>{{c.balance | currency:'P '}}</td>
@@ -21,7 +25,7 @@
             </tr>
             <tr data-ng-if="c.collapse" data-ng-repeat-end="">
                 <td colspan="5">
-                    <strong>Transaction(s):</strong> 
+                    <strong>Transaction(s):</strong>
                     <div class="table-responsive">
                         <table class="table table-bordered transaction-table">
                             <thead>

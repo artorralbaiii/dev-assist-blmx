@@ -4,12 +4,23 @@ var random = require('random-name');
 
 module.exports = () => {
     var ctrl = {
-        createAccount: createAccount
+        createAccount: createAccount,
+        getTemplates: getTemplates
     };
 
     return ctrl;
 
     // Implementations
+
+    function getTemplates(req, res, next) {
+        Template.find({}, function (err, docs) {
+            if (err) {
+                return next(err);
+            }
+
+            res.json(docs);
+        }).sort({updatedAt:-1});
+    }
 
     /*jshint -W074 */
     function createAccount(req, res, next) {
@@ -152,7 +163,7 @@ function randomData(fldType) {
         var start = new Date(2018, 01, 01);
         var end = new Date(2018, 12, 31);
 
-        return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()))
+        return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     }
 
 }

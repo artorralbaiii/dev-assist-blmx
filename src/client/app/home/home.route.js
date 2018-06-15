@@ -11,7 +11,12 @@
             .when('/:id?', {
                 templateUrl: 'app/home/home.html',
                 controller: 'Home',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    templates: ['dataservice', function (dataservice) {
+                        return dataservice.getTemplates();
+                    }]
+                }
             })
             .otherwise({ redirectTo: '/' });
     }

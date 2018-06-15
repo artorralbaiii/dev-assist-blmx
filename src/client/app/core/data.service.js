@@ -8,7 +8,8 @@
 
     function dataservice($http, $log) {
         var service = {
-            createData: createData
+            createData: createData,
+            getTemplates: getTemplates
         };
 
         return service;
@@ -24,5 +25,17 @@
                     $log.error(msg);
                 });
         }
+
+        function getTemplates() {
+            return $http.get('/api/template')
+                .then(function (data, status, headers, config) {
+                    return data.data;
+                })
+                .catch(function (msg) {
+                    $log.error(msg);
+                });
+        }
+
+
     }
 })();

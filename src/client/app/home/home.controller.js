@@ -4,9 +4,9 @@
     angular.module('app.home')
         .controller('Home', Home);
 
-    Home.$inject = ['$routeParams', 'dataservice'];
+    Home.$inject = ['$routeParams', 'dataservice', 'templates'];
 
-    function Home($routeParams, dataservice) {
+    function Home($routeParams, dataservice, templates) {
         var vm = this;
         vm.state = 0;
         vm.DEFAULT_SCR = 0;
@@ -14,7 +14,7 @@
         vm.DISPLAY_DATA_SCR = 2;
         vm.submit = submit;
 
-        vm.customers = [];
+        vm.customers = templates;
         vm.customer = {};
         vm.customer.rndCustName = true;
         vm.customer.rndBalance = true;
@@ -26,6 +26,8 @@
         vm.customer.transCount = 1;
         vm.customer.custCount = 1;
         vm.customer.templateId = null;
+        
+        vm.templates = templates;
 
         if ($routeParams['id']) {
             vm.state = parseInt($routeParams['id']);
