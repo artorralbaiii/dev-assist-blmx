@@ -8,11 +8,13 @@
 
     function Home($routeParams, dataservice) {
         var vm = this;
-        vm.state =0; 
+        vm.state = 0;
         vm.DEFAULT_SCR = 0;
         vm.FORM_SCR = 1;
+        vm.DISPLAY_DATA_SCR = 2;
         vm.submit = submit;
 
+        vm.customers = [];
         vm.customer = {};
         vm.customer.rndCustName = true;
         vm.customer.rndBalance = true;
@@ -31,11 +33,12 @@
 
         function submit(data) {
             dataservice.createData(data)
-                .then(function(data){
-                    console.log(data);
+                .then(function (data) {
+                    vm.state = 2;
+                    vm.customers = data;
                 });
         }
 
     }
-    
+
 })();

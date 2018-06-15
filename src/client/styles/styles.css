@@ -9,3 +9,11 @@
 .btn-sm {
     font-size: .7rem;
 }
+
+.transaction-table {
+    font-size: .7rem;
+}
+
+.customer-row {
+    cursor: pointer;a
+}

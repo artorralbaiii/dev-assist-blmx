@@ -1,0 +1,45 @@
+<h3>{{vm.customers.length}} record(s) has been created:</h3>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Customer Name</th>
+                <th>Product</th>
+                <th>Balance</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="customer-row" data-ng-repeat-start="c in vm.customers" data-ng-click="c.collapse=!c.collapse">
+                <td><strong>{{c.collapse ? '-' : '+'}}</strong></td>
+                <td>{{c.name}}</td>
+                <td>{{c.product}}</td>
+                <td>{{c.balance | currency:'P '}}</td>
+                <td>{{c.status}}</td>
+            </tr>
+            <tr data-ng-if="c.collapse" data-ng-repeat-end="">
+                <td colspan="5">
+                    <strong>Transaction(s):</strong> 
+                    <div class="table-responsive">
+                        <table class="table table-bordered transaction-table">
+                            <thead>
+                                <th>Transaction Date</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                            </thead>
+                            <tbody>
+                                <tr data-ng-repeat="t in c.transactions">
+                                    <td>{{t.transDate | date:'MM/dd/yyyy'}}</td>
+                                    <td>{{t.transType }}</td>
+                                    <td>{{t.amount | currency:'P '}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
