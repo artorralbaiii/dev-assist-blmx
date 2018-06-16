@@ -15,5 +15,13 @@
 }
 
 .customer-row {
-    cursor: pointer;a
+    cursor: pointer;
+}
+
+.template-list {
+    font-size: .7rem;
+}
+
+.template-item {
+    cursor: pointer;
 }

@@ -1,6 +1,7 @@
 var Customer = require('../models/customer');
 var Template = require('../models/template');
 var random = require('random-name');
+var _ = require('underscore');
 
 module.exports = () => {
     var ctrl = {
@@ -12,6 +13,7 @@ module.exports = () => {
 
     // Implementations
 
+    /*jshint -W074 */
     function getTemplates(req, res, next) {
         Template.find({}, function (err, docs) {
             if (err) {
@@ -19,10 +21,10 @@ module.exports = () => {
             }
 
             res.json(docs);
-        }).sort({updatedAt:-1});
+        }).sort({ updatedAt: -1 });
     }
 
-    /*jshint -W074 */
+
     function createAccount(req, res, next) {
         var body = req.body;
         var customers = [];
@@ -108,15 +110,24 @@ module.exports = () => {
             if (err) {
                 return next(err);
             } else {
-                Template.findById(body.templateId, function (err, doc) {
+                Template.findById(body.templateId, function (err, docTemplate) {
                     if (err) {
                         return next(err);
                     }
 
-                    var template = new Template({
-                        templateName: body.templateName,
-                        data: JSON.stringify(body)
-                    });
+                    var template = null;
+
+                    if (docTemplate) {
+                        template = docTemplate;
+                        template.templateName = body.templateName;
+                        template.data = JSON.stringify(body);
+                    } else {
+                        // body = _.extend(body, {templateId: doc});
+                        template = new Template({
+                            templateName: body.templateName,
+                            data: JSON.stringify(body)
+                        });
+                    }
 
                     template.save(function (err, doc) {
                         if (err) {
