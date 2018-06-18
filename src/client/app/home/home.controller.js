@@ -40,8 +40,9 @@
         function submit(data) {
             dataservice.createData(data)
                 .then(function (data) {
+                    console.log(data);
                     vm.state = 2;
-                    vm.customers = data;
+                    vm.customers = data.data;
                     vm.templates.push(vm.customer);
                 });
         }

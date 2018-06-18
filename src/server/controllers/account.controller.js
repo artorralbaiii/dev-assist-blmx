@@ -1,4 +1,7 @@
+/* jshint ignore:start */
+
 var Customer = require('../models/customer');
+var fs = require('fs');
 var Template = require('../models/template');
 var random = require('random-name');
 var _ = require('underscore');
@@ -15,7 +18,7 @@ module.exports = () => {
 
     // Implementations
 
-    /*jshint -W074 */
+
 
     function openForm(req, res) {
         global._socket.emit('load-form', null);
@@ -69,6 +72,8 @@ module.exports = () => {
         var transType = '';
         var amount = 0;
         var transDate = new Date();
+        var sSQL = 'INSERT INTO customer_info';
+        var folder = 'sqlfiles';
 
         for (var i = 0; i < body.custCount; i++) {
 
@@ -166,7 +171,23 @@ module.exports = () => {
                         if (err) {
                             return next(err);
                         }
-                        res.json(docs.ops);
+
+                        if (!fs.existsSync('./' + folder)) {
+                            fs.mkdirSync('./' + folder);
+                        }
+
+                        var fileName = './' + folder + '/' + body.templateName + '.sql';
+
+                        fs.writeFile(fileName, sSQL, function (err) {
+                            if (err) {
+                                return next(err);
+                            }
+
+                            res.json({
+                                data: docs.ops,
+                                file: fileName,
+                            });
+                        });
                     });
                 });
             }
@@ -176,7 +197,7 @@ module.exports = () => {
 
 };
 
-/*jshint +W074 */
+
 
 function randomData(fldType) {
     var index = 0;
@@ -211,3 +232,5 @@ function randomData(fldType) {
     }
 
 }
+
+/* jshint ignore:end */
