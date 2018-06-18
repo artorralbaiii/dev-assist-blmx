@@ -27,6 +27,9 @@
         vm.customer.transCount = 1;
         vm.customer.custCount = 1;
         vm.customer.templateId = null;
+        vm.searchTemplate = {
+            templateName: ''
+        };
 
         vm.templates = templates;
 

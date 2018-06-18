@@ -1,8 +1,12 @@
 <div class="card">
     <div class="card-header">Template(s):</div>
     <div class="card-body">
+        <!-- <div class="form-group"> -->
+            <input data-ng-model="vm.searchTemplate.templateName" class="form-control form-control-sm" type="search" placeholder="search..">
+        <!-- </div> -->
     </div>
     <ul class="list-group template-list">
-        <a data-ng-click="vm.loadTemplate(t._id, t.data);" data-ng-repeat="t in vm.templates track by $index" class="list-group-item list-group-item-action template-item">{{t.templateName}}</a>
+        <a data-ng-click="vm.loadTemplate(t._id, t.data);" data-ng-repeat="t in vm.templates | filter:vm.searchTemplate track by $index"
+            class="list-group-item list-group-item-action template-item">{{t.templateName}}</a>
     </ul>
 </div>
