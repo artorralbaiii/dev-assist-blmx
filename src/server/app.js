@@ -45,6 +45,8 @@ console.log('About to crank up node');
 console.log('PORT=' + port);
 console.log('NODE_ENV=' + environ);
 
+environ = 'dev';
+
 switch (environ) {
     case 'build':
         console.log('** BUILD ***');
