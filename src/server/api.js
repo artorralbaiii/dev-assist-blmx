@@ -8,6 +8,7 @@ module.exports = (express) => {
 
     api.post('/account', accountCtrl.createAccount);
     api.get('/template', accountCtrl.getTemplates);
+    api.get('/form', accountCtrl.openForm);
 
     return api;
 };

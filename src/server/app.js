@@ -59,7 +59,20 @@ switch (environ) {
         break;
 }
 
-app.listen(port, () => {
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+io.on('connect', function (socket) {
+    global._socket = socket;
+    console.log('Client is connected!');
+});
+
+// app.listen(port, () => {
+//     console.log('Express server is listening on port ' + port);
+//     console.log('\n ___dirname = ' + __dirname + '\nprocess.cwd = ' + process.cwd());
+// });
+
+server.listen(port, function () {
     console.log('Express server is listening on port ' + port);
     console.log('\n ___dirname = ' + __dirname + '\nprocess.cwd = ' + process.cwd());
 });

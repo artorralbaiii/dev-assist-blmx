@@ -6,7 +6,8 @@ var _ = require('underscore');
 module.exports = () => {
     var ctrl = {
         createAccount: createAccount,
-        getTemplates: getTemplates
+        getTemplates: getTemplates,
+        openForm: openForm
     };
 
     return ctrl;
@@ -14,6 +15,14 @@ module.exports = () => {
     // Implementations
 
     /*jshint -W074 */
+
+    function openForm(req, res) {
+        global._socket.emit('load-form', null);
+        res.json({
+            message: 'Emitted: load-form'
+        });
+    }
+
     function getTemplates(req, res, next) {
         Template.find({}, function (err, docs) {
             if (err) {

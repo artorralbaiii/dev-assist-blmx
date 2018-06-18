@@ -4,9 +4,9 @@
     angular.module('app.home')
         .controller('Home', Home);
 
-    Home.$inject = ['$routeParams', 'dataservice', 'templates'];
+    Home.$inject = ['$routeParams', 'dataservice', 'templates', 'socketService'];
 
-    function Home($routeParams, dataservice, templates) {
+    function Home($routeParams, dataservice, templates, socketService) {
         var vm = this;
         vm.state = 0;
         vm.DEFAULT_SCR = 0;
@@ -49,6 +49,11 @@
             vm.customer = jsonData;
             vm.customer.templateId = id;
         }
+
+        socketService.on('load-form', function (data) {
+            console.log('Load Form');
+            vm.state = vm.FORM_SCR;
+        });
 
     }
 
