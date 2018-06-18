@@ -6,6 +6,7 @@ var _ = require('underscore');
 module.exports = () => {
     var ctrl = {
         createAccount: createAccount,
+        dialogHook: dialogHook,
         getTemplates: getTemplates,
         openForm: openForm
     };
@@ -21,6 +22,29 @@ module.exports = () => {
         res.json({
             message: 'Emitted: load-form'
         });
+    }
+
+    function dialogHook(req, res, next) {
+        var body = req.body;
+        var action = body.queryResult.action;
+
+        switch (action) {
+            case 'OpenFormData': {
+                global._socket.emit('load-form', null);
+                res.json({
+                    message: 'Emitted: load-form'
+                });
+
+                break;
+            }
+
+            default: {
+                res.json({
+                    message: 'No Action Found!'
+                });
+            }
+        }
+
     }
 
     function getTemplates(req, res, next) {
