@@ -21,7 +21,10 @@ module.exports = () => {
 
 
     function openForm(req, res) {
-        global._socket.emit('load-form', null);
+        var body = req.body;
+        var params = body.queryResult.parameters;
+
+        global._socket.emit('load-form', params);
         res.json({
             message: 'Emitted: load-form'
         });
@@ -30,10 +33,16 @@ module.exports = () => {
     function dialogHook(req, res, next) {
         var body = req.body;
         var action = body.queryResult.action;
+        var params = {};
 
         switch (action) {
             case 'OpenFormData': {
-                global._socket.emit('load-form', null);
+
+                if (body.queryResult.hasOwnProperty('parameters')) {
+                    params = body.queryResult.parameters;
+                }
+
+                global._socket.emit('load-form', params);
                 res.json({
                     message: 'Emitted: load-form'
                 });
