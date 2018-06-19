@@ -34,6 +34,7 @@ module.exports = () => {
         var body = req.body;
         var action = body.queryResult.action;
         var params = {};
+        var newCustomer = null;
 
         switch (action) {
             case 'OpenFormData': {
@@ -48,6 +49,140 @@ module.exports = () => {
                 });
 
                 break;
+            }
+
+            case 'PreviousTemplate': {
+                if (body.queryResult.hasOwnProperty('parameters')) {
+                    params = body.queryResult.parameters;
+                }
+
+                Template.findOne({ templateName: params.tempId }, function (err, data) {
+                    if (err) {
+                        return next(err);
+                    }
+
+                    var sSQL = 'INSERT INTO customer_info (Name, Status, Product, Balance) Values(';
+                    var folder = 'sqlfiles';
+
+                    for (var i = 0; i < data.custCount; i++) {
+
+                        if (data.rndCustName) {
+                            name = randomData('NAME');
+                        } else {
+                            if (i === 0) {
+                                name = data.custName;
+                            } else {
+                                name = data.custName + '_' + i;
+                            }
+                        }
+
+                        sSQL = sSQL + '\'' + name + '\',';
+
+                        if (data.rndStatus) {
+                            status = randomData('STATUS');
+                        } else {
+                            status = data.status;
+                        }
+
+                        sSQL = sSQL + '\'' + status + '\',';
+
+                        if (data.rndProduct) {
+                            product = randomData('PRODUCT');
+                        } else {
+                            product = data.product;
+                        }
+
+                        sSQL = sSQL + '\'' + product + '\',';
+
+                        if (data.rndBalance) {
+                            balance = randomData('BALANCE');
+                        } else {
+                            balance = data.balance;
+                        }
+
+                        sSQL = sSQL + balance + ');';
+
+                        newCustomer = new Customer({
+                            name: name,
+                            status: status,
+                            product: product,
+                            balance: balance,
+                            transactions: []
+                        });
+
+                        for (var j = 0; j < data.transCount; j++) {
+
+                            if (data.rndAmt) {
+                                amount = randomData('AMOUNT');
+                            } else {
+                                amount = data.amt;
+                            }
+
+                            sSQL = sSQL + 'INSERT INTO Transaction (Amount, TransType, TransDate) VALUES (' + amount + ',';
+
+                            if (data.rndTransType) {
+                                transType = randomData('TYPE');
+                            } else {
+                                transType = data.type;
+                            }
+
+                            sSQL = sSQL + '\'' + transType + '\','
+
+                            if (data.rndAmt) {
+                                transDate = randomData('DATE');
+                            } else {
+                                transDate = body.transDate;
+                            }
+
+                            sSQL = sSQL + '\'' + transDate + '\')';
+
+                            var trans = {
+                                transType: transType,
+                                amount: amount,
+                                transDate: transDate
+                            };
+                            newCustomer.transactions.push(trans);
+                        }
+
+                        customers.push(newCustomer);
+                    }
+
+                    Customer.collection.insert(customers, function (err, docs) {
+                        if (err) {
+                            return next(err);
+                        }
+
+                        if (!fs.existsSync('./' + folder)) {
+                            fs.mkdirSync('./' + folder);
+                        }
+
+                        var fileName = './' + folder + '/' + body.templateName + '.sql';
+
+                        fs.writeFile(fileName, sSQL, function (err) {
+                            if (err) {
+                                return next(err);
+                            }
+
+                            global._socket.emit('template-executed', {
+                                data: docs.ops,
+                                file: fileName,
+                            });
+
+                            res.json({
+                                message: 'Emitted: template-executed'
+                            });
+
+                            
+
+                        });
+
+
+                    });
+
+                });
+
+                break;
+
             }
 
             default: {
@@ -96,7 +231,7 @@ module.exports = () => {
                 }
             }
 
-            sSQL = sSQL + '\'' + name + '\','; 
+            sSQL = sSQL + '\'' + name + '\',';
 
             if (body.rndStatus) {
                 status = randomData('STATUS');
@@ -104,7 +239,7 @@ module.exports = () => {
                 status = body.status;
             }
 
-            sSQL = sSQL + '\'' + status + '\','; 
+            sSQL = sSQL + '\'' + status + '\',';
 
             if (body.rndProduct) {
                 product = randomData('PRODUCT');
@@ -112,7 +247,7 @@ module.exports = () => {
                 product = body.product;
             }
 
-            sSQL = sSQL + '\'' + product + '\','; 
+            sSQL = sSQL + '\'' + product + '\',';
 
             if (body.rndBalance) {
                 balance = randomData('BALANCE');
@@ -120,7 +255,7 @@ module.exports = () => {
                 balance = body.balance;
             }
 
-            sSQL = sSQL + balance + ');'; 
+            sSQL = sSQL + balance + ');';
 
             newCustomer = new Customer({
                 name: name,
@@ -211,6 +346,7 @@ module.exports = () => {
                                 file: fileName,
                             });
                         });
+
                     });
                 });
             }
