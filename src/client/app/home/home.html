@@ -1,17 +1,18 @@
 <div class="row">
     <div data-ng-if="vm.DEFAULT_SCR===vm.state" class="home-col col-md-8">
-          <h1>Hi I'm Deva</h1>
+          <h1>Hi I'm Deva!</h1>
 <br><n>I'm your development assistant! I can help you create test data, retrieve existing test data and re-execute previous request. </n>
 <br><br>
         <ul>
 <ul>
             
-            <li>To create a test account, you may just say <i>"create test account"</i></li>
+            <li>To create a test account, you may just say <i>"create test account."</i></li>
             <li>To retrieve existing test account, you may just say <i>"retrieve existing test account"</i>.</li>
-            <li>To re-excute template, you may just say  <i>"re-excute previous template" or provide template id</i></li>
+            <li>To re-execute template, you may just say  <i>"re-execute previous template" or provide template id.</i></li>
         </ul>
         </ul>
-        <img src="/src/client/images/frame.png" alt="frame.png" height="300" width="300">     
+        <br>
+        <img src="/src/client/images/frame.png" alt="frame.png" height="200" width="200">     
     </div>
 
     <div data-ng-if="vm.FORM_SCR===vm.state" ng-include="'app/home/template-list.html'" class="home-col col-md-2">
