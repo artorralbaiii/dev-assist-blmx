@@ -57,7 +57,38 @@
         }
 
         socketService.on('load-form', function (data) {
-            console.log('Load Form');
+            console.log(data);
+            
+            if (data.hasOwnProperty('status')) {
+                vm.customer.status = data.status;
+                vm.customer.rndStatus = false;
+            }
+
+            if (data.hasOwnProperty('balance')) {
+                vm.customer.balance = data.balance;
+                vm.customer.rndBalance = false;
+            }
+
+            if (data.hasOwnProperty('product')) {
+                vm.customer.product = data.product;
+                vm.customer.rndProduct = false;
+            }
+
+            if (data.hasOwnProperty('type')) {
+                vm.customer.type = data.type;
+                vm.customer.rndTransType = false;
+            }
+
+            if (data.hasOwnProperty('amt')) {
+                vm.customer.amt = data.amt;
+                vm.customer.rndAmt = false;
+            }
+
+            if (data.hasOwnProperty('transDate')) {
+                vm.customer.transDate = new Date(data.transDate);
+                vm.customer.rndTransDate = false;
+            }
+
             vm.state = vm.FORM_SCR;
         });
 
