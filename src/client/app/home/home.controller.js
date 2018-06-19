@@ -67,16 +67,18 @@
                     vm.customer.status = data.status;
                     vm.customer.rndStatus = false;
                 }
-            } else {
+            } else { 
+                vm.customer.status = '';
                 vm.customer.rndStatus = true;
             }
 
             if (data.hasOwnProperty('balance')) {
-                if (data.balance !== 0) {
+                if (data.balance !== 0 && data.balance !== '0') {
                     vm.customer.balance = data.balance;
                     vm.customer.rndBalance = false;
                 }
             } else {
+                vm.customer.balance = 0;
                 vm.customer.rndBalance = true;
             }
 
@@ -86,6 +88,7 @@
                     vm.customer.rndProduct = false;
                 }
             } else {
+                vm.customer.product = '';
                 vm.customer.rndProduct = true;
             }
 
@@ -95,15 +98,17 @@
                     vm.customer.rndTransType = false;
                 }
             } else {
+                vm.customer.type = '';
                 vm.customer.rndTransType = true;
             }
 
             if (data.hasOwnProperty('amt')) {
-                if (data.amt !== 0) {
+                if (data.amt !== '0' && data.amt !== 0) {
                     vm.customer.amt = data.amt;
                     vm.customer.rndAmt = false;
                 }
             } else {
+                vm.customer.amt = 0;
                 vm.customer.rndAmt = true;
             }
 
@@ -113,9 +118,10 @@
                     vm.customer.rndTransDate = false;
                 }
             } else {
+                vm.customer.transDate = null;
                 vm.customer.rndTransDate = true;
             }
-            vm.customer.transDate = null;
+            
             vm.state = vm.FORM_SCR;
         });
 

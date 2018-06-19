@@ -34,6 +34,7 @@ module.exports = () => {
         var body = req.body;
         var action = body.queryResult.action;
         var params = {};
+        var customers = [];
         var newCustomer = null;
 
         switch (action) {
@@ -171,8 +172,6 @@ module.exports = () => {
                             res.json({
                                 message: 'Emitted: template-executed'
                             });
-
-                            
 
                         });
 
