@@ -72,7 +72,7 @@ module.exports = () => {
         var transType = '';
         var amount = 0;
         var transDate = new Date();
-        var sSQL = 'INSERT INTO customer_info';
+        var sSQL = 'INSERT INTO customer_info (Name, Status, Product, Balance) Values(';
         var folder = 'sqlfiles';
 
         for (var i = 0; i < body.custCount; i++) {
@@ -87,11 +87,15 @@ module.exports = () => {
                 }
             }
 
+            sSQL = sSQL + '\'' + name + '\','; 
+
             if (body.rndStatus) {
                 status = randomData('STATUS');
             } else {
                 status = body.status;
             }
+
+            sSQL = sSQL + '\'' + status + '\','; 
 
             if (body.rndProduct) {
                 product = randomData('PRODUCT');
@@ -99,11 +103,15 @@ module.exports = () => {
                 product = body.product;
             }
 
+            sSQL = sSQL + '\'' + product + '\','; 
+
             if (body.rndBalance) {
                 balance = randomData('BALANCE');
             } else {
                 balance = body.balance;
             }
+
+            sSQL = sSQL + balance + ');'; 
 
             newCustomer = new Customer({
                 name: name,
@@ -121,17 +129,23 @@ module.exports = () => {
                     amount = body.amt;
                 }
 
+                sSQL = sSQL + 'INSERT INTO Transaction (Amount, TransType, TransDate) VALUES (' + amount + ',';
+
                 if (body.rndTransType) {
                     transType = randomData('TYPE');
                 } else {
                     transType = body.type;
                 }
 
+                sSQL = sSQL + '\'' + transType + '\','
+
                 if (body.rndAmt) {
                     transDate = randomData('DATE');
                 } else {
                     transDate = body.transDate;
                 }
+
+                sSQL = sSQL + '\'' + transDate + '\')';
 
                 var trans = {
                     transType: transType,

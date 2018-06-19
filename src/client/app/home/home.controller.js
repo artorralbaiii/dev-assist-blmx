@@ -30,6 +30,7 @@
         vm.searchTemplate = {
             templateName: ''
         };
+        vm.sqlpath = '';
 
         vm.templates = templates;
 
@@ -43,6 +44,7 @@
                     console.log(data);
                     vm.state = 2;
                     vm.customers = data.data;
+                    vm.sqlpath = data.file;
                     vm.templates.push(vm.customer);
                 });
         }
